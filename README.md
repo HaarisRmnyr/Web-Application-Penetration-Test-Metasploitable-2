@@ -49,4 +49,14 @@ uname -a: Returned Linux metasploitable.
 
 This proves that the exploit was a success and I have root-level access to the target VM. This marks the successful completion of the exploitation phase. I will now take a break before proceeding with post-exploitation activities.
 
+With root-level access confirmed, I proceeded to the post-exploitation phase to gather sensitive information and identify potential next steps.
+
+The primary goal was to enumerate local users and search for sensitive files on the system. To do this, I executed the following commands from the compromised shell:
+
+- cat /etc/passwd: This command was used to examine the /etc/passwd file, which contains a list of all user accounts on the system. This allowed me to identify various user IDs, such as msfadmin, service, and user, which could be used for further lateral movement or privilege escalation.
+
+- find / -type f -name "*.conf" 2>/dev/null: This command was used to search for files with specific extensions, such as configuration files (.conf), that might contain sensitive information like passwords, API keys, or other credentials. The 2>/dev/null part of the command is used to suppress error messages, such as "Permission denied," which keeps the output clean and easier to read.
+
+I then pivoted from the file system to the database. Using the psql command-line interface, I was able to log in and access the PostgreSQL database. This step demonstrates the ability to move laterally within a compromised system and exploit different services to gather additional information. I will now search for sensitive data within the database.
+
 
