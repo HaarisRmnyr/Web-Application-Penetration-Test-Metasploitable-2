@@ -26,3 +26,27 @@ Port 80 - HTTP (Apache httpd 2.2.8): A web server is running on this port. The s
 Other Open Ports: The scan also identified a range of other open services, including Telnet (23), SMB (139, 445), and a database service (3306).
 
 These findings provide the necessary intelligence to proceed with a targeted attack plan.
+
+**Phase 2: Vulnerability Exploitation with Metasploit**
+
+Based on the reconnaissance, the first specific target for exploitation will be the vsftpd 2.3.4 service found on port 21. For this phase, I am using the Metasploit Framework, a powerful, open-source tool for penetration testing.
+
+I created a dedicated attacker VM using Debian 64-bit and loaded a Kali Linux ISO onto it, creating a secure and powerful environment for penetration testing.
+
+Using the msfconsole interface, I selected a pre-built exploit module specifically for the vsftpd 2.3.4 backdoor vulnerability. The process involved:
+
+Setting the remote host (RHOSTS) to the target IP address.
+
+Configuring the payload to deliver a command shell once the exploit was successful.
+
+**Executing the exploit**
+
+The attack was successful, and a command shell was established with the target machine. I was able to confirm full system access by running the following commands:
+
+whoami: Returned root.
+
+uname -a: Returned Linux metasploitable.
+
+This proves that the exploit was a success and I have root-level access to the target VM. This marks the successful completion of the exploitation phase. I will now take a break before proceeding with post-exploitation activities.
+
+
