@@ -59,4 +59,37 @@ The primary goal was to enumerate local users and search for sensitive files on 
 
 I then pivoted from the file system to the database. Using the psql command-line interface, I was able to log in and access the PostgreSQL database. This step demonstrates the ability to move laterally within a compromised system and exploit different services to gather additional information. I will now search for sensitive data within the database.
 
+Phase 2: Vulnerability Exploitation with Metasploit 💥
+Based on the reconnaissance, the first specific target for exploitation will be the vsftpd 2.3.4 service found on port 21. For this phase, I am using the Metasploit Framework, a powerful, open-source tool for penetration testing.
+
+Using the msfconsole interface, I selected a pre-built exploit module specifically for the vsftpd 2.3.4 backdoor vulnerability. The process involved:
+
+Setting the remote host (RHOSTS) to the target IP address.
+
+Configuring the payload to deliver a command shell once the exploit was successful.
+
+Executing the exploit.
+
+The attack was successful, and a command shell was established with the target machine. I was able to confirm full system access by running the following commands:
+
+whoami: Returned root.
+
+uname -a: Returned Linux metasploitable.
+
+This proves that the exploit was a success and I have root-level access to the target VM. This marks the successful completion of the exploitation phase.
+
+**Exploiting the Samba Service**
+
+To further demonstrate my ability to identify and exploit multiple vulnerabilities on a single target, I pivoted to the Samba service running on the Metasploitable VM.
+
+Before proceeding, I initialized a Metasploit database using the command sudo msfdb init. This allows the framework to store and manage information about hosts, services, and credentials.
+
+From msfconsole, I used the exploit/multi/samba/usermap_script module, which targets a known vulnerability in the Samba service. I set the following parameters:
+
+RHOSTS to the IP address of the Metasploitable VM.
+
+LHOST to the IP address of my Kali Linux attacker VM.
+
+Upon running the exploit, I once again gained a root-level command shell on the target machine, confirming a second successful and independent path to system compromise.
+
 
